@@ -4,7 +4,7 @@ const URL = 'admin'
 
 export function login(username, password) {
   return request({
-    url: URL + '/login',
+    url: URL + '/user',
     method: 'post',
     data: {
       username,
