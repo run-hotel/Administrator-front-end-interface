@@ -9,6 +9,9 @@ git clone https://gitee.com/huangsr/hotel-manager.git
 # 下载依赖
 npm install
 
+#下载ECharts
+npm install echarts --save
+
 # 运行服务 localhost:9528
 npm run dev
 

@@ -23,14 +23,16 @@
           <tr>
             <td>手机号码：</td>
             <td>
-              <el-input v-model="user1.phone"></el-input>
+              <el-input v-model="user1.phone"
+              :disabled="true"></el-input>
             </td>
           </tr>
 
           <tr>
             <td>邮箱地址：</td>
             <td>
-              <el-input v-model="user1.email"></el-input>
+              <el-input v-model="user1.email"
+              :disabled="true"></el-input>
             </td>
           </tr>
           <tr>
@@ -43,7 +45,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateInfo">确 定</el-button>
+        <el-button class="primary" @click="updateInfo">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -62,7 +64,7 @@
             <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button class="primary" @click="submitForm('ruleForm')">提交</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -71,7 +73,7 @@
 
     <el-descriptions class="margin-top" title="个人中心" :column="3"  border>
       <template slot="extra">
-        <el-button type="primary" size="small" @click="dialogVisible=true">修改个人信息</el-button>
+        <el-button class="primary" size="small" @click="dialogVisible=true">修改个人信息</el-button>
       </template>
       <el-descriptions-item>
         <template slot="label">
@@ -227,5 +229,8 @@
 </script>
 
 <style scoped>
-
+  .primary {
+    background-color:#273954;
+    color: white;
+  }
 </style>

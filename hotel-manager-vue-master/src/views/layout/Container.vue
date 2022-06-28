@@ -1,14 +1,15 @@
+<!-- 页面的大致布局 -->
 <template>
   <el-container id="container">
     <el-header>
-      <span style="float: left;font-size: 24px">
-        <i class="el-icon-location-outline"/>
-        基于自动化管理流程的酒店管理系统</span>
+      <span style="float: left;font-size: 24px;font-family:'Courier New', Courier, monospace;font-weight: bold;">
+        <i class="el-icon-menu"/>
+        艾迪酒店</span>
       <div class="info">
-        <el-button type="primary" round>{{ roles[role] }}</el-button>
-        <button class="el-icon-bell" @click="gochat"></button>
+        <el-button class="primary" type="text" round>{{ roles[role] }}</el-button>
+        <button class="el-icon-message" @click="gochat"></button>
         <el-dropdown @command="handleCommand">
-          <el-button icon="el-icon-info" type="primary">
+          <el-button icon="el-icon-user-solid" class="primary" type="text">
             <el-badge is-dot class="item">{{ username }}</el-badge>
           </el-button>
           <el-dropdown-menu slot="dropdown">
@@ -25,7 +26,7 @@
       <el-aside>
         <el-menu
           :collapse="isCollapse"
-          background-color="#324157"
+          background-color="#3d4858"
           text-color="#fff"
           active-text-color="#ffd04b"
           class="el-menu-vertical-demo"
@@ -35,48 +36,60 @@
             <i class="el-icon-sort"/>
             <span slot="title">展开/关闭侧边栏</span>
           </el-menu-item>
+
           <el-menu-item index="1" @click="navigateTo('/')">
             <i class="el-icon-news"/>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item v-show="role == 'admin'" index="2" @click="navigateTo('/roomType')">
+
+          <el-menu-item v-show="role == 'admin' || role == 'roommer'" index="2" @click="navigateTo('/roomType')">
             <i class="el-icon-goods"/>
             <span slot="title">房间类型管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role == 'admin'||role!='admin'" index="3" @click="navigateTo('/roomInfo')">
+
+          <el-menu-item v-show="role == 'admin'|| role != 'admin'" index="3" @click="navigateTo('/roomInfo')">
             <i class="el-icon-sold-out"/>
             <span slot="title">房间信息管理</span>
           </el-menu-item>
+
           <el-menu-item v-show="role == 'admin'" index="4" @click="navigateTo('/bookingType')">
             <i class="el-icon-service"/>
             <span slot="title">预订方式管理</span>
           </el-menu-item>
-          <el-menu-item index="11" @click="navigateTo('/department')" v-show="role == 'admin'">
-            <i class="el-icon-setting"></i>
+
+          <el-menu-item index="5" @click="navigateTo('/department')" v-show="role == 'admin'">
+            <i class="el-icon-menu"></i>
             <span slot="title">部门管理</span>
           </el-menu-item>
 
-          <el-menu-item v-show="role == 'admin'" index="5" @click="navigateTo('/worker')">
+          <el-menu-item v-show="role == 'admin'" index="6" @click="navigateTo('/worker')">
             <i class="el-icon-setting"/>
             <span slot="title">工作人员管理</span>
           </el-menu-item>
 
-
-          <!--            工作人员管理-->
-          <el-menu-item v-show="role != 'admin'" index="6" @click="navigateTo('/order')">
+          <!-- 工作人员管理 -->
+          <el-menu-item v-show="role == 'front' || role == 'service'" index="7" @click="navigateTo('/order')">
             <i class="el-icon-mobile-phone"/>
             <span slot="title">订单信息管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role != 'admin'" index="7" @click="navigateTo('/user')">
+          <el-menu-item v-show="role == 'finana'" index="8" @click="navigateTo('/finana')">
+            <i class="el-icon-wallet"/>
+            <span slot="title">财务管理</span>
+          </el-menu-item>
+          <el-menu-item v-show="role == 'repair'" index="9" @click="navigateTo('/repair')">
+            <i class="el-icon-phone-outlinet"/>
+            <span slot="title">维修管理</span>
+          </el-menu-item>
+          <el-menu-item v-show="role != 'admin'" index="10" @click="navigateTo('/user')">
             <i class="el-icon-edit-outline"/>
             <span slot="title">客户信息管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role != 'admin'" index="8" @click="navigateTo('/checkin')">
+          <el-menu-item v-show="role != 'admin'" index="11" @click="navigateTo('/checkin')">
             <i class="el-icon-edit-outline"/>
             <span slot="title">客户入住信息管理</span>
           </el-menu-item>
-          <el-menu-item index="9" @click="navigateTo('/comment')" v-show="role != 'admin'">
-            <i class="el-icon-tickets"></i>
+          <el-menu-item index="12" @click="navigateTo('/comment')" v-show="role == 'service'">
+            <i class="el-icon-s-order"></i>
             <span slot="title">评价信息管理</span>
           </el-menu-item>
         </el-menu>
@@ -117,7 +130,14 @@
         role: null,
         roles: {
           'admin': '管理员',
-          'operator': '操作员'
+          'techper': '技术部',
+          'finana': '财务部',
+          'security': '保安部',
+          'chef': '厨务部',
+          'roommer': '客房部',
+          'repair': '维修部',
+          'service': '客服部',
+          'front': '前台'
         }
       }
     },
@@ -172,11 +192,12 @@
   }
 
   .el-header {
-    background-color: #409EFF;
+    /* background-color: #409EFF; */
     color: #fff;
     text-align: center;
     font-size: 14px;
     line-height: 60px;
+    background-color:#273954;
   }
 
   .el-header .info {
@@ -186,6 +207,7 @@
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
+    background-color: #3d4858;
   }
 
   el-menu-vertical-demo {
@@ -196,6 +218,11 @@
     color: #fff;
     width: inherit !important;
     /*height: 100%;*/
-    background-color: #324157;
+    background-color: #3d4858;
+  }
+
+  .primary {
+    background-color:#273954;
+    color: white;
   }
 </style>
