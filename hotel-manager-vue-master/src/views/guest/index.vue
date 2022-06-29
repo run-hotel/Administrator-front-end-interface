@@ -10,9 +10,9 @@
         accept='.xls'
         style="display: inline-block; margin: 0 10px"
       >
-        <el-button type="primary">导入</el-button>
+        <el-button class="primary">导入</el-button>
       </el-upload>
-      <el-button type="primary" @click="exportUser">导出</el-button>
+      <el-button class="primary" @click="exportUser">导出</el-button>
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入用户名进行搜索"
@@ -21,7 +21,7 @@
         clearable
       >
       </el-input>
-      <el-button type="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
+      <el-button class="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
       <!--      <el-button type="primary" style="float: right; padding: 6px 12px" icon="el-icon-search">搜索</el-button>-->
     </div>
     <el-table
@@ -200,5 +200,8 @@
 </script>
 
 <style scoped>
-
+  .primary {
+    background-color:#273954;
+    color: white;
+  }
 </style>

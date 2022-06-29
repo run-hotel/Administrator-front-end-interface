@@ -97,7 +97,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelIn()">取 消</el-button>
-        <el-button type="primary" @click="inputInfo">办理入住</el-button>
+        <el-button class="primary" @click="inputInfo">办理入住</el-button>
       </div>
 
 
@@ -121,8 +121,8 @@
           <span style="font-size: 20px;">入住房间号为：</span>
           <el-tag type="success" effect="plain">{{roomNumShow}}</el-tag>
         </div>
-        <el-button type="primary" @click="cancelPerson">关闭</el-button>
-        <el-button type="danger" @click="checkIn">确定入住</el-button>
+        <el-button type="danger" @click="cancelPerson">关闭</el-button>
+        <el-button class="comfirm" @click="checkIn">确定入住</el-button>
       </div>
     </el-dialog>
 
@@ -131,7 +131,7 @@
         <el-form-item label="房间号">
           <el-input v-model="rooms.roomNumber" autoComplete="on" style="width:100%" placeholder="请输入退房号码"></el-input>
         </el-form-item>
-        <el-button type="primary" @click="checkoutEvent">确定</el-button>
+        <el-button class="comfirm" @click="checkoutEvent">确定</el-button>
       </el-form>
 
 
@@ -374,5 +374,10 @@
 
   .clearfix {
     font-size: large;
+  }
+
+  .comfirm {
+    background-color: blanchedalmond;
+    color: black;
   }
 </style>

@@ -3,7 +3,7 @@
   <el-container id="container">
     <el-header>
       <span style="float: left;font-size: 24px;font-family:'Courier New', Courier, monospace;font-weight: bold;">
-        <i class="el-icon-menu"/>
+        <i class="el-icon-sunny"/>
         艾迪酒店</span>
       <div class="info">
         <el-button class="primary" type="text" round>{{ roles[role] }}</el-button>
@@ -130,14 +130,7 @@
         role: null,
         roles: {
           'admin': '管理员',
-          'techper': '技术部',
-          'finana': '财务部',
-          'security': '保安部',
-          'chef': '厨务部',
-          'roommer': '客房部',
-          'repair': '维修部',
-          'service': '客服部',
-          'front': '前台'
+          'operator': '工作人员'
         }
       }
     },

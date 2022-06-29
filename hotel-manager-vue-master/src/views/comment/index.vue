@@ -10,7 +10,7 @@
         clearable
       >
       </el-input>
-      <el-button type="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
+      <el-button class="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -161,5 +161,10 @@
   .bottom {
     margin-top: 13px;
     line-height: 12px;
+  }
+
+  .primary {
+    background-color:#273954;
+    color: white;
   }
 </style>

@@ -56,6 +56,7 @@
           <el-radio :label="statusList.available">空闲</el-radio>
           <el-radio :label="statusList.occupied">已预订</el-radio>
           <el-radio :label="statusList.inUse">已入住</el-radio>
+          <el-radio :label="statusList.repairing">维修中</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="详细描述">
@@ -97,7 +98,8 @@
           unavailable: 0,
           available: 1,
           occupied: 2,
-          inUse: 3
+          inUse: 3,
+          repairing: 4
         }
       }
     },

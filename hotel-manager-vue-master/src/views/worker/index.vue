@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header">
-      <el-button type="primary" @click="navigateTo('add')">添加工作人员信息</el-button>
-      <el-button type="danger" @click="BatchDelete(ids)">批量删除</el-button>
+      <el-button class="primary" @click="navigateTo('add')">添加工作人员信息</el-button>
+      <el-button class="primary" @click="BatchDelete(ids)">批量删除</el-button>
       <el-upload
 
         class="upload-demo"
@@ -13,9 +13,9 @@
         :limit="1"
         style="display: inline-block; margin: 0 10px"
       >
-        <el-button type="primary">导入</el-button>
+        <el-button class="primary">导入</el-button>
       </el-upload>
-      <el-button type="success" plain @click="downPerson">导出</el-button>
+      <el-button plain @click="downPerson" class="primary">导出</el-button>
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入用户名进行搜索"
@@ -24,7 +24,7 @@
         clearable
       >
       </el-input>
-      <el-button type="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
+      <el-button class="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
 
     </div>
     <el-table
@@ -75,7 +75,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
+          <el-button class="primary"
             size="mini"
             @click="handleEdit(scope.$index, scope.row)">编辑
           </el-button>
@@ -86,7 +86,7 @@
             <p>确定删除吗？</p>
             <div style="text-align: right; margin: 0">
               <el-button size="mini" round @click="scope.row.visible2 = false">取消</el-button>
-              <el-button type="danger" size="mini" round @click="handleDel(scope.row)">确定</el-button>
+              <el-button type="danger" size="mini" round @click="handleDel(scope.row)" class="primary">确定</el-button>
             </div>
             <el-button slot="reference" :loading="scope.row.loading" size="mini" type="danger"
                        @click="scope.row.visible2 = true">删除
@@ -209,13 +209,8 @@
 
       },
       handleUploadSuccess(res) {
-
         console.log('---------ahdau'+res.data)
 
-      },
-      downPerson() {
-        // location.href = "http://" + window.server.filesUploadUrl + ":9090/user/export";
-        location.href = 'http://localhost:8082/admin/operator/export'
       },
       //批量删除
       BatchDelete(rows) {
@@ -246,8 +241,7 @@
       handleCurrentChange(pageNum) {  // 改变当前页码触发
         this.currentPage = pageNum
         this.fetchData()
-      }
-      ,
+      },
 
       //获取所有数据
       fetchData() {
@@ -305,6 +299,10 @@
         console.log(val + '---------------')
         this.ids = val.map(v => v.workerId)   // [{id,name}, {id,name}] => [id,id]
         console.log(this.ids)
+      },
+      downPerson() {
+        // location.href = "http://" + window.server.filesUploadUrl + ":9090/user/export";
+        location.href = 'http://localhost:8082/admin/operator/export'
       }
     }
   }
@@ -318,5 +316,10 @@
   .bottom {
     margin-top: 13px;
     line-height: 12px;
+  }
+
+    .primary {
+    background-color:#273954;
+    color: white;
   }
 </style>

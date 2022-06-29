@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header">
-      <el-button type="primary" @click="navigateTo('add')">添加房间类型</el-button>
-      <el-button type="danger" @click="deleteRoomTypeByBatch(ids)">批量删除</el-button>
+      <el-button class="primary" @click="navigateTo('add')">添加房间类型</el-button>
+      <el-button class="primary" @click="deleteRoomTypeByBatch(ids)">批量删除</el-button>
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入房间类型进行搜索"
@@ -11,7 +11,7 @@
         clearable
       >
       </el-input>
-      <el-button type="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
+      <el-button class="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -111,7 +111,8 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
+            @click="handleEdit(scope.$index, scope.row)"
+            class="primary">编辑
           </el-button>
           <el-popover
             v-model="scope.row.visible2"
@@ -284,5 +285,10 @@
   .bottom {
     margin-top: 13px;
     line-height: 12px;
+  }
+
+  .primary {
+    background-color:#273954;
+    color: white;
   }
 </style>

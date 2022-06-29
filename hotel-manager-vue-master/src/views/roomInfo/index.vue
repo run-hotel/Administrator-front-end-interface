@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header">
-      <el-button type="primary" v-if="user.role==='admin'" @click="navigateTo('add')">添加房间信息</el-button>
-      <el-button type="danger" v-if="user.role==='admin'" @click="BatchDelete(ids)">批量删除</el-button>
+      <el-button class="primary" v-if="user.role==='admin'" @click="navigateTo('add')">添加房间信息</el-button>
+      <el-button class="primary" v-if="user.role==='admin'" @click="BatchDelete(ids)">批量删除</el-button>
 
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
@@ -12,7 +12,7 @@
         clearable
       >
       </el-input>
-      <el-button type="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
+      <el-button class="primary" icon="el-icon-search" style="float: right;" @click="fetchData">搜索</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -97,7 +97,8 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
+            @click="handleEdit(scope.$index, scope.row)"
+            class="primary">编辑
           </el-button>
           <el-popover
             v-model="scope.row.visible2"
@@ -148,6 +149,8 @@
             return '已预订'
           case 3:
             return '已入住'
+          case 4:
+            return '维修中'
         }
       }
     },
@@ -291,9 +294,11 @@
           case 1:
             return 'success'
           case 2:
-            return 'warning'
+            return 'primary'
           case 3:
             return 'danger'
+          case 4:
+            return 'warning'
         }
       }
     }
@@ -304,5 +309,10 @@
   .bottom {
     margin-top: 13px;
     line-height: 12px;
+  }
+
+  .primary {
+    background-color:#273954;
+    color: white;
   }
 </style>
