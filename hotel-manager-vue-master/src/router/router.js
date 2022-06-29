@@ -197,6 +197,60 @@ export const constantRouterMap = [
     ]
   },
 
+  //  财务管理
+  {
+    path: '/finana',
+    component: Container,
+    meta: { title: '财务管理', requireAuth: true },
+    children: [
+      {
+        path: '',
+        name: '财务管理',
+        meta: { title: '财务管理' },
+        component: () => import('@/views/finana/index')
+      },
+      {
+        path: 'add',
+        name: '添加财务',
+        meta: { title: '添加财务' },
+        hidden: true,
+        component: () => import('@/views/finana/add')
+
+      },
+      {
+        path: 'edit',
+        name: '审核财务',
+        meta: { title: '审核财务' },
+        hidden: true,
+        component: () => import('@/views/finana/edit')
+
+      }
+    ]
+  },
+
+  // 维修管理
+  {
+    path: '/repair',
+    component: Container,
+    meta: { title: '维修管理', requireAuth: true },
+    children: [
+      {
+        path: '',
+        name: '维修管理',
+        meta: { title: '维修管理' },
+        component: () => import('@/views/repair/index')
+      },
+      {
+        path: 'delete',
+        name: '完成维修',
+        meta: { title: '完成维修' },
+        hidden: true,
+        component: () => import('@/views/repair/delete')
+
+      }
+    ]
+  },
+
   {
     path: '/comment',
     component: Container,

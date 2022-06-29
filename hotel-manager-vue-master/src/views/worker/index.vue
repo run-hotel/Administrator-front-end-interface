@@ -318,7 +318,7 @@
     line-height: 12px;
   }
 
-    .primary {
+  .primary {
     background-color:#273954;
     color: white;
   }

@@ -42,7 +42,7 @@
             <span slot="title">首页</span>
           </el-menu-item>
 
-          <el-menu-item v-show="role == 'admin' || role == 'roommer'" index="2" @click="navigateTo('/roomType')">
+          <el-menu-item v-show="role == 'admin' || user.deptName == '客房部'" index="2" @click="navigateTo('/roomType')">
             <i class="el-icon-goods"/>
             <span slot="title">房间类型管理</span>
           </el-menu-item>
@@ -68,27 +68,27 @@
           </el-menu-item>
 
           <!-- 工作人员管理 -->
-          <el-menu-item v-show="role == 'front' || role == 'service'" index="7" @click="navigateTo('/order')">
+          <el-menu-item v-show="user.deptName == '前台' || user.deptName == '客服部'" index="7" @click="navigateTo('/order')">
             <i class="el-icon-mobile-phone"/>
             <span slot="title">订单信息管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role == 'finana'" index="8" @click="navigateTo('/finana')">
+          <el-menu-item v-show="user.deptName == '财务部'" index="8" @click="navigateTo('/finana')">
             <i class="el-icon-wallet"/>
             <span slot="title">财务管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role == 'repair'" index="9" @click="navigateTo('/repair')">
-            <i class="el-icon-phone-outlinet"/>
+          <el-menu-item v-show="user.deptName == '维修部'" index="9" @click="navigateTo('/repair')">
+            <i class="el-icon-paperclip"/>
             <span slot="title">维修管理</span>
           </el-menu-item>
           <el-menu-item v-show="role != 'admin'" index="10" @click="navigateTo('/user')">
-            <i class="el-icon-edit-outline"/>
+            <i class="el-icon-document"/>
             <span slot="title">客户信息管理</span>
           </el-menu-item>
           <el-menu-item v-show="role != 'admin'" index="11" @click="navigateTo('/checkin')">
             <i class="el-icon-edit-outline"/>
             <span slot="title">客户入住信息管理</span>
           </el-menu-item>
-          <el-menu-item index="12" @click="navigateTo('/comment')" v-show="role == 'service'">
+          <el-menu-item index="12" @click="navigateTo('/comment')" v-show="user.deptName == '客户部'">
             <i class="el-icon-s-order"></i>
             <span slot="title">评价信息管理</span>
           </el-menu-item>
@@ -116,13 +116,14 @@
   import Cookies from 'js-cookie'
   import { getByUsername } from '../../api/admin'
   import { getUserById } from '../../api/user'
-  import { logout } from '../../api/login'
+  import { getInfo, logout, update } from '../../api/login'
 
   export default {
     name: 'Container',
     components: { ElMain, ElAside, ElHeader, ElContainer },
     data() {
       return {
+        user:{},
         isCollapse: false,
         isAdmin: null,
         username: null,
@@ -135,11 +136,20 @@
       }
     },
     created: function() {
+      this.initUser()
       this.username = Cookies.get('admin_name')
       this.userInfo = null
       this.role = Cookies.get('role')
     },
     methods: {
+      initUser() {
+        getInfo().then(resp => {
+          console.log(resp)
+          if(resp) {
+            this.user = resp.data
+          }
+        })
+      },
       gochat() {
         this.$router.push('/wechat')
       },
