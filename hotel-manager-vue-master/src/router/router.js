@@ -162,7 +162,7 @@ export const constantRouterMap = [
         name: 'EditOrder',
         hidden: true,
         component: () => import('@/views/order/edit'),
-        meta: { title: '编辑订单' }
+        meta: { title: '财务审核' }
       }
     ]
   },
@@ -208,22 +208,6 @@ export const constantRouterMap = [
         name: '财务管理',
         meta: { title: '财务管理' },
         component: () => import('@/views/finana/index')
-      },
-      {
-        path: 'add',
-        name: '添加财务',
-        meta: { title: '添加财务' },
-        hidden: true,
-        component: () => import('@/views/finana/add')
-
-      },
-      {
-        path: 'edit',
-        name: '审核财务',
-        meta: { title: '审核财务' },
-        hidden: true,
-        component: () => import('@/views/finana/edit')
-
       }
     ]
   },

@@ -68,7 +68,7 @@
           </el-menu-item>
 
           <!-- 工作人员管理 -->
-          <el-menu-item v-show="user.deptName == '前台' || user.deptName == '客服部'" index="7" @click="navigateTo('/order')">
+          <el-menu-item v-show="user.deptName == '前台' || user.deptName == '客服部' || user.deptName == '财务部'" index="7" @click="navigateTo('/order')">
             <i class="el-icon-mobile-phone"/>
             <span slot="title">订单信息管理</span>
           </el-menu-item>
