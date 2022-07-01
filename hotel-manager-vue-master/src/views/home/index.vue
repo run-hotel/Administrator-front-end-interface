@@ -1,7 +1,8 @@
 <template>
   <div id="home">
     <el-row :gutter="20">
-      <el-col :span="8">
+
+      <el-col :span="8" v-if="user.deptName == '前台'">
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
             <i class="el-icon-s-platform"></i>
@@ -11,6 +12,18 @@
           <el-button class="primary" @click="dialogout=true">退房结账</el-button>
         </el-card>
       </el-col>
+
+      <el-col :span="8" v-if="user.deptName != '前台'">
+        <el-card class="box-card" shadow="hover">
+          <div slot="header" class="clearfix">
+            <i class="el-icon-s-platform"></i>
+            <span>快捷操作</span>
+          </div>
+          <el-button class="unable" @click="dialogFormVisible = false">入住登记</el-button>
+          <el-button class="unable" @click="dialogout=false">退房结账</el-button>
+        </el-card>
+      </el-col>
+
       <el-col :span="8">
         <el-card class="box-card" shadow="hover">
           <div slot="header" class="clearfix">
@@ -143,6 +156,8 @@
   import { getOrderByNameAndPhone, getOrderCount } from '../../api/order'
   import { getAllUser, getUserCount } from '../../api/user'
   import { checkIn, checkOut } from '../../api/checkIn'
+  import { getInfo } from '../../api/login'
+  import { deleteBatchRoomType, getAllRoomType, delRoomType } from '@/api/roomType'
 
   export default {
     name: 'Home',
@@ -175,6 +190,38 @@
           roomType: null,
           orderDays: null,
           orderCost: null
+        },
+        user: {},
+        total: 10,
+        currentPage: 1,
+        pageSize: 8,
+        search: '',
+        visible2: false,
+        multipleSelection: [],
+        listLoading: true,
+        list: null,
+        loading: false,
+        ids: [],
+        bedNum: 1,
+        numList: {
+          num1: 1,
+          num2: 1,
+          num3: 1,
+          num4: 1,
+          num5: 1,
+          num6: 1,
+          num7: 1,
+          num8: 1
+        },
+        restList: {
+          rest1: 1,
+          rest2: 1,
+          rest3: 1,
+          rest4: 1,
+          rest5: 1,
+          rest6: 1,
+          rest7: 1,
+          rest8: 1,
         }
       }
     },
@@ -182,10 +229,11 @@
       this.getCount()
     },
     mounted() {
-      this.rtChart()
-      this.lrChart()
-      this.orderChart()
-      this.ortChart()
+      // this.getCount()
+      // this.rtChart()
+      // this.lrChart()
+      // this.orderChart()
+      // this.ortChart()
     },
     methods: {
       //退房申请
@@ -209,8 +257,44 @@
         getOrderCount().then(res => {
           this.orderCount = res.data
         })
-      },
+        getInfo().then(resp => {
 
+          console.log("user--->"+JSON.stringify(resp.data))
+          if (resp) {
+            this.user = resp.data
+            this.user1 = Object.assign({}, this.user)
+          }
+        })
+
+        this.listLoading = true
+        getAllRoomType(this.currentPage, this.pageSize, this.search).then(response => {
+          console.log(response)
+          this.list = response.data.list
+          this.list.reverse()
+          this.total = response.data.total
+          this.listLoading = false
+          this.$set(this.numList, 'num1' , this.list[0].bedNum)
+          this.$set(this.numList, 'num2' , this.list[1].bedNum)
+          this.$set(this.numList, 'num3' , this.list[2].bedNum)
+          this.$set(this.numList, 'num4' , this.list[3].bedNum)
+          this.$set(this.numList, 'num5' , this.list[4].bedNum)
+          this.$set(this.numList, 'num6' , this.list[5].bedNum)
+          this.$set(this.numList, 'num7' , this.list[6].bedNum)
+          this.$set(this.numList, 'num8' , this.list[7].bedNum)
+          this.$set(this.restList, 'rest1' , (this.list[0].bedNum-this.list[0].rest))
+          this.$set(this.restList, 'rest2' , (this.list[1].bedNum-this.list[1].rest))
+          this.$set(this.restList, 'rest3' , (this.list[2].bedNum-this.list[2].rest))
+          this.$set(this.restList, 'rest4' , (this.list[3].bedNum-this.list[3].rest))
+          this.$set(this.restList, 'rest5' , (this.list[4].bedNum-this.list[4].rest))
+          this.$set(this.restList, 'rest6' , (this.list[5].bedNum-this.list[5].rest))
+          this.$set(this.restList, 'rest7' , (this.list[6].bedNum-this.list[6].rest))
+          this.$set(this.restList, 'rest8' , (this.list[7].bedNum-this.list[7].rest))
+          this.rtChart()
+          this.lrChart()
+          this.orderChart()
+          this.ortChart()
+        })
+      },
       rtChart() {
         var rtChart = this.$echarts.init(document.getElementById('roomType'), 'light')
         rtChart.setOption({
@@ -220,12 +304,14 @@
             type: 'pie',
             radius: '55%',
             data: [
-              { value: 35, name: '单人房' },
-              { value: 55, name: '大床房' },
-              { value: 45, name: '双床房' },
-              { value: 55, name: '商务大床房' },
-              { value: 45, name: '商务双床房' },
-              { value: 35, name: '豪华大床房' }
+              { value: this.numList.num8, name: '单人房' },
+              { value: this.numList.num1, name: '电竞房' },
+              { value: this.numList.num2, name: '豪华大床房' },
+              { value: this.numList.num3, name: '商务大床房' },
+              { value: this.numList.num4, name: '情侣房' },
+              { value: this.numList.num5, name: '双人房' },
+              { value: this.numList.num6, name: '总统房' },
+              { value: this.numList.num7, name: '豪华套房' },
             ]
           }]
         })
@@ -294,12 +380,14 @@
             type: 'pie',
             radius: '55%',
             data: [
-              { value: 35, name: '单人房' },
-              { value: 15, name: '大床房' },
-              { value: 10, name: '双床房' },
-              { value: 15, name: '商务大床房' },
-              { value: 5, name: '商务双床房' },
-              { value: 20, name: '豪华大床房' }
+              { value: this.restList.rest8, name: '单人房' },
+              { value: this.restList.rest1, name: '电竞房' },
+              { value: this.restList.rest2, name: '豪华大床房' },
+              { value: this.restList.rest3, name: '商务大床房' },
+              { value: this.restList.rest4, name: '情侣房' },
+              { value: this.restList.rest5, name: '双人房' },
+              { value: this.restList.rest6, name: '总统房' },
+              { value: this.restList.rest7, name: '豪华套房' },
             ]
           }]
         })
@@ -379,5 +467,10 @@
   .comfirm {
     background-color: blanchedalmond;
     color: black;
+  }
+
+  .unable {
+    background-color: grey;
+    color: white;
   }
 </style>

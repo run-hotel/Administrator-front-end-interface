@@ -93,11 +93,14 @@
           <span style="margin-left: 10px">{{ scope.row.updateTime | formatDate }}</span>
         </template>
       </el-table-column>
-    <!--  <el-table-column label="操作">
+     <!-- <el-table-column label="操作"
+     fixed="right"
+     v-if="user.deptName == '前台'">
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
+            @click="handleEdit(scope.$index, scope.row)"
+            class="primary">编辑
           </el-button>
           <el-popover
             v-model="scope.row.visible2"
@@ -113,7 +116,7 @@
             </el-button>
           </el-popover>
         </template>
-      </el-table-column>-->
+      </el-table-column> -->
 
     </el-table>
 
@@ -135,6 +138,7 @@
 
 <script>
   import { delOrder, getAllOrder } from '../../api/order'
+  // import { getInfo } from '../../api/login'
 
   export default {
     name: 'Order',
@@ -148,7 +152,8 @@
         visible2: false,
         loading: null,
         listLoading: false,
-        multipleSelection: null
+        multipleSelection: null,
+        // user: {},
       }
     },
     created: function() {
@@ -175,6 +180,15 @@
             message: err.toString()
           })
         })
+
+        // getInfo().then(resp => {
+
+        //   console.log("user--->"+JSON.stringify(resp.data))
+        //   if (resp) {
+        //     this.user = resp.data
+        //     this.user1 = Object.assign({}, this.user)
+        //   }
+        // })
       },
       navigateTo(val) {
         this.$router.push('/order/' + val)
@@ -208,6 +222,13 @@
         this.fetchData()
       },
       handleEdit(index, row) {
+        // this.$router.push({
+        //   path: '/order',
+        //   name: 'EditOrder',
+        //   params: {
+        //     id: row.orderId
+        //   }
+        // })
       },
       toggleSelection(rows) {
         if (rows) {

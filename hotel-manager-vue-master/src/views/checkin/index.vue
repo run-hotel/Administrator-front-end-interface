@@ -1,18 +1,6 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header" style="height: 40px">
-      <!--<el-upload
-        action="http://localhost:8082/files/userImport"
-        :on-success="handleUploadSuccess"
-        :auto-upload="true"
-        :show-file-list=false
-        :limit="1"
-        accept='.xls'
-        style="display: inline-block; margin: 0 10px"
-      >
-        <el-button type="primary">导入</el-button>
-      </el-upload>
-      <el-button type="primary" @click="exportUser">导出</el-button>-->
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入房间号进行搜索"
@@ -68,7 +56,30 @@
                 v-if="scope.row.checkOutTime!=null">{{ scope.row.checkOutTime | formatDate }}</span>
         </template>
       </el-table-column>
-
+      <!-- <el-table-column label="操作"
+     fixed="right"
+     v-if="user.deptName == '前台'">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)"
+            class="primary">编辑
+          </el-button>
+          <el-popover
+            v-model="scope.row.visible2"
+            placement="top"
+            width="160">
+            <p>确定删除吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" round @click="scope.row.visible2 = false">取消</el-button>
+              <el-button type="danger" size="mini" round @click="handleDel(scope.row)">确定</el-button>
+            </div>
+            <el-button slot="reference" :loading="scope.row.loading" size="mini" type="danger"
+                       @click="scope.row.visible2 = true">删除
+            </el-button>
+          </el-popover>
+        </template>
+      </el-table-column> -->
 
     </el-table>
 
@@ -91,6 +102,7 @@
 
 <script>
   import { getCheckinAll } from '../../api/checkIn'
+  // import { getInfo } from '../../api/login'
 
   export default {
     name: 'Guest',
@@ -104,7 +116,8 @@
         visible2: false,
         loading: null,
         listLoading: false,
-        multipleSelection: null
+        multipleSelection: null,
+        // user: {},
       }
     },
     created: function() {
@@ -141,6 +154,15 @@
             message: err.toString()
           })
         })
+
+        // getInfo().then(resp => {
+
+        //   console.log("user--->"+JSON.stringify(resp.data))
+        //   if (resp) {
+        //     this.user = resp.data
+        //     this.user1 = Object.assign({}, this.user)
+        //   }
+        // })
       },
       navigateTo(val) {
         this.$router.push('/user/' + val)

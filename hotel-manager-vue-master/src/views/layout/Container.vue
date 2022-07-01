@@ -88,8 +88,8 @@
             <i class="el-icon-edit-outline"/>
             <span slot="title">客户入住信息管理</span>
           </el-menu-item>
-          <el-menu-item index="12" @click="navigateTo('/comment')" v-show="user.deptName == '客户部'">
-            <i class="el-icon-s-order"></i>
+          <el-menu-item index="12" @click="navigateTo('/comment')" v-show="user.deptName == '客服部'">
+            <i class="el-icon-s-order"/>
             <span slot="title">评价信息管理</span>
           </el-menu-item>
         </el-menu>
