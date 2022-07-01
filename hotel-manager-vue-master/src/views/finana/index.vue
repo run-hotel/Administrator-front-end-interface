@@ -1,7 +1,13 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header" style="height: 40px">
-<!--      <span>订单信息管理</span>-->
+    <div @click="showBox = false" class="box">
+      <el-button class="primary" @click.stop="showBox = true" @click="result()">结算财务</el-button>
+      <el-button class="primary" @click.stop="showBox = true" @click="clear()">清空</el-button>
+      <div class="box1" v-show="showBox">总结算：
+      {{ sum }}
+      </div>
+    </div>
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入订单号进行搜索"
@@ -121,8 +127,10 @@
         visible2: false,
         loading: null,
         listLoading: false,
-        multipleSelection: null
-      }
+        multipleSelection: null,
+        sum: 0, // 结算的总金额
+        showBox: false
+      };
     },
     created: function() {
       this.fetchData()
@@ -138,6 +146,10 @@
       },
       fetchData() {
         getAllOrder(this.currentPage,this.pagesize,this.search).then(response => {
+          console.log("==========")
+          console.log(response.data.list[1].orderStatus)
+          console.log(response.data.total)
+          console.log("==========")
           console.log(response)
           this.list = response.data.list
           this.total=response.data.total
@@ -193,6 +205,18 @@
       },
       handleSelectionChange() {
         this.multipleSelection = val
+      },
+      clear() {
+        this.sum = 0
+      },
+      result() {
+        var i = 0;
+        while(1) {
+          if(this.list[i].orderStatus == 1 || this.list[i].orderStatus == 2) {
+            this.sum += this.list[i].orderCost
+          }
+          i++
+         }
       }
     }
   }
@@ -202,5 +226,10 @@
   .primary {
     background-color:#273954;
     color: white;
+  }
+  
+  .box1 {
+    color: rgba(52, 51, 51, 0.801);
+    font-size: 15px;
   }
 </style>

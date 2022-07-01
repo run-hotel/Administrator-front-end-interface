@@ -4,7 +4,7 @@
     <el-header>
       <span style="float: left;font-size: 24px;font-family:'Courier New', Courier, monospace;font-weight: bold;">
         <i class="el-icon-sunny"/>
-        艾迪酒店</span>
+        艾登酒店</span>
       <div class="info">
         <el-button class="primary" type="text" round>{{ roles[role] }}</el-button>
         <button class="el-icon-message" @click="gochat"></button>
@@ -47,7 +47,7 @@
             <span slot="title">房间类型管理</span>
           </el-menu-item>
 
-          <el-menu-item v-show="role == 'admin'|| role != 'admin'" index="3" @click="navigateTo('/roomInfo')">
+          <el-menu-item v-show="role == 'admin'|| user.deptName == '客房部'" index="3" @click="navigateTo('/roomInfo')">
             <i class="el-icon-sold-out"/>
             <span slot="title">房间信息管理</span>
           </el-menu-item>
@@ -80,11 +80,11 @@
             <i class="el-icon-paperclip"/>
             <span slot="title">维修管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role != 'admin'" index="10" @click="navigateTo('/user')">
+          <el-menu-item v-show="role != 'admin' && user.deptName != '财务部' && user.deptName != '客房部'" index="10" @click="navigateTo('/user')">
             <i class="el-icon-document"/>
             <span slot="title">客户信息管理</span>
           </el-menu-item>
-          <el-menu-item v-show="role != 'admin'" index="11" @click="navigateTo('/checkin')">
+          <el-menu-item v-show="role != 'admin' && user.deptName != '客房部'" index="11" @click="navigateTo('/checkin')">
             <i class="el-icon-edit-outline"/>
             <span slot="title">客户入住信息管理</span>
           </el-menu-item>
@@ -154,9 +154,11 @@
         this.$router.push('/wechat')
       },
       handleCommand(command) {
+        console.log(command)
         switch (command) {
           case 'info':
             this.$router.push('/userInfo')
+            // console.log("11")
             break
           case 'logout':
             this.logout()

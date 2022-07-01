@@ -223,14 +223,6 @@ export const constantRouterMap = [
         name: '维修管理',
         meta: { title: '维修管理' },
         component: () => import('@/views/repair/index')
-      },
-      {
-        path: 'delete',
-        name: '完成维修',
-        meta: { title: '完成维修' },
-        hidden: true,
-        component: () => import('@/views/repair/delete')
-
       }
     ]
   },

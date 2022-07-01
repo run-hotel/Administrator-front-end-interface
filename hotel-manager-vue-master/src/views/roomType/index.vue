@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header">
-      <el-button class="primary" @click="navigateTo('add')">添加房间类型</el-button>
-      <el-button class="primary" @click="deleteRoomTypeByBatch(ids)">批量删除</el-button>
+      <el-button class="primary" @click="navigateTo('add')" v-if="user.deptName == '客房部'">添加房间类型</el-button>
+      <el-button class="primary" @click="deleteRoomTypeByBatch(ids)" v-if="user.deptName == '客房部'">批量删除</el-button>
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
         placeholder="输入房间类型进行搜索"
@@ -107,11 +107,14 @@
           <span style="margin-left: 10px">{{ scope.row.updateTime | formatDate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作"
+      v-if="user.deptName == '客房部'"
+      fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)"
+            v-if="user.deptName == '客房部'"
             class="primary">编辑
           </el-button>
           <el-popover
@@ -148,6 +151,7 @@
 
 <script>
   import { deleteBatchRoomType, getAllRoomType, delRoomType } from '@/api/roomType'
+  import { getInfo } from '../../api/login'
 
   export default {
     filters: {
@@ -170,7 +174,8 @@
         listLoading: true,
         list: null,
         loading: false,
-        ids: []
+        ids: [],
+        user: {},
       }
     },
     created: function() {
@@ -216,6 +221,16 @@
           this.list.reverse()
           this.total = response.data.total
           this.listLoading = false
+        })
+        
+        console.log("nmd")
+        getInfo().then(resp => {
+
+          console.log("user--->"+JSON.stringify(resp.data))
+          if (resp) {
+            this.user = resp.data
+            this.user1 = Object.assign({}, this.user)
+          }
         })
       },
       navigateTo(val) {

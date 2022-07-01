@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card" shadow="always">
     <div slot="header">
-      <el-button class="primary" v-if="user.role==='admin'" @click="navigateTo('add')">添加房间信息</el-button>
-      <el-button class="primary" v-if="user.role==='admin'" @click="BatchDelete(ids)">批量删除</el-button>
+      <el-button class="primary" v-if="user.deptName == '客房部'" @click="navigateTo('add')">添加房间信息</el-button>
+      <el-button class="primary" v-if="user.deptName == '客房部'" @click="BatchDelete(ids)">批量删除</el-button>
 
       <el-input
         style="width: 300px;position: absolute;right: 150px;"
@@ -91,13 +91,13 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="user.role==='admin'"
         fixed="right"
         label="操作">
         <template slot-scope="scope">
           <el-button
             size="mini"
             @click="handleEdit(scope.$index, scope.row)"
+            v-if="user.deptName == '客房部'"
             class="primary">编辑
           </el-button>
           <el-popover
@@ -176,6 +176,7 @@
     },
     created: function() {
       this.fetchData()
+      console.log(user.role)
     },
     methods: {
 

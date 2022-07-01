@@ -57,6 +57,16 @@ export function getAllRoom(currentNum, pageSize, search) {
   })
 }
 
+export function getBySatatus(sta) {
+  return request({
+    url: URL + '/status/' + sta,
+    method: 'post',
+    data: {
+      sta
+    }
+  })
+}
+
 export function deleteBatch(ids) {
   return request({
     url: URL + '/deleteBatch/'+ids,
