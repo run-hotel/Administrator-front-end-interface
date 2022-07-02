@@ -12,7 +12,7 @@
         <el-button class="primary" type="text" round>{{
           roles[role]
         }}</el-button>
-        <button class="el-icon-message" @click="gochat"></button>
+        <!-- <button class="el-icon-message" @click="gochat"></button> -->
         <el-dropdown @command="handleCommand">
           <el-button icon="el-icon-user-solid" class="primary" type="text">
             <el-badge is-dot class="item">{{ username }}</el-badge>
