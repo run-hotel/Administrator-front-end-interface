@@ -99,27 +99,27 @@
     </el-row>
     <el-dialog title="入住登记" :visible.sync="dialogFormVisible">
       <el-form inline :model="form">
-        <el-form-item label="预订人姓名">
+        <el-form-item label="房间号">
           <el-input
             v-model="form.name"
             autoComplete="on"
             class="box"
           ></el-input>
         </el-form-item>
-        <el-form-item label="预留手机号">
+        <el-form-item label="手机号">
           <el-input
             v-model="form.phone"
             autoComplete="on"
             class="box"
           ></el-input>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button type="primary" @click="findOrder()" class="search"
             >查询</el-button
           >
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
-      <div v-if="isOrderShown && order != null" style="font-size: 13px;">
+      <!-- <div v-if="isOrderShown && order != null" style="font-size: 13px;">
         <span style="font-size: 15px;font-weight: bold">
           订单号：{{ order.payOrderId }}</span
         ><br />
@@ -128,14 +128,14 @@
         预订日期： {{ order.orderDate | formatDay }}<br />
         预订天数： {{ order.orderDays }}天<br />
         预订费用： {{ order.orderCost }}
-      </div>
+      </div> -->
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelIn()">取 消</el-button>
-        <el-button class="primary" @click="inputInfo">办理入住</el-button>
+        <el-button class="primary" @click="inputInfo(form.name, 2)">办理入住</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="入住人信息" :visible.sync="dialogPersonInfo" width="90%">
+    <!-- <el-dialog title="入住人信息" :visible.sync="dialogPersonInfo" width="90%">
       <el-form inline :model="persons" label-width="120px">
         <el-form-item label="入住人">
           <el-input
@@ -171,7 +171,7 @@
         <el-button type="danger" @click="cancelPerson">关闭</el-button>
         <el-button class="comfirm" @click="checkIn">确定入住</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
     <el-dialog title="退房结账" :visible.sync="dialogout" width="50%">
       <el-form inline :model="rooms" label-width="120px">
@@ -184,7 +184,7 @@
             class="box"
           ></el-input>
         </el-form-item>
-        <el-button class="comfirm" @click="checkoutEvent" >确定</el-button>
+        <el-button class="primary" @click="checkoutEvent" >确定</el-button>
       </el-form>
     </el-dialog>
   </div>
@@ -523,13 +523,14 @@ export default {
       }
     },
 
-    inputInfo() {
-      console.log(this.order);
-      if (this.order !== null) {
-        this.dialogFormVisible = false;
-        // 开启新的提示框
-        this.dialogPersonInfo = true;
-      }
+    inputInfo(roomId, num) {
+      this.$router.push({
+        path:"/op/room/update1",
+        query:{
+          roomId:roomId,
+          num:num
+        }
+      });
     },
     //todo
     checkIn() {

@@ -59,7 +59,7 @@
           </el-menu-item>
 
           <el-menu-item
-            v-show="role == 'admin' || user.deptName == '客房部'"
+            v-show="role == 'admin' || user.deptName == '客房部' || user.deptName == '前台'"
             index="3"
             @click="navigateTo('/roomInfo')"
             class="className"
