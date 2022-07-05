@@ -131,7 +131,7 @@
       </div> -->
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelIn()">取 消</el-button>
-        <el-button class="primary" @click="inputInfo(form.name, 2)">办理入住</el-button>
+        <el-button class="primary" @click="inputInfo(form.name)">办理入住</el-button>
       </div>
     </el-dialog>
 
@@ -184,7 +184,7 @@
             class="box"
           ></el-input>
         </el-form-item>
-        <el-button class="primary" @click="checkoutEvent" >确定</el-button>
+        <el-button class="primary" @click="checkoutEvent(rooms.roomNumber)" >确定</el-button>
       </el-form>
     </el-dialog>
   </div>
@@ -200,6 +200,7 @@ import {
   getAllRoomType,
   delRoomType
 } from "@/api/roomType";
+import axios from 'axios';
 
 export default {
   name: "Home",
@@ -279,18 +280,16 @@ export default {
   },
   methods: {
     //退房申请
-    checkoutEvent() {
-      checkOut(this.rooms.roomNumber).then(result => {
-        console.log(result.data);
-        //退房成功
-        if (result.code === 1000) {
-          this.$message.success("退房成功");
-          this.dialogout = false;
-        } else {
-          this.$message.warning("退房失败");
-        }
+    checkoutEvent(roomNumber) {
+      axios.get(`http://localhost:8090/op/room/update2?roomId=${roomNumber}`).then(res =>{
+        this.$message.success("退房成功");
       });
     },
+    //     inputInfo(roomId) {
+    //   axios.get(`http://localhost:8090/op/room/updatel?roomId=${roomId}`).then(res =>{
+    //     this.$message.success("办理入住成功");
+    //   });
+    // },
     /*获取订单量和用户数量*/
     getCount() {
       getUserCount().then(response => {
@@ -523,13 +522,9 @@ export default {
       }
     },
 
-    inputInfo(roomId, num) {
-      this.$router.push({
-        path:"/op/room/update1",
-        query:{
-          roomId:roomId,
-          num:num
-        }
+    inputInfo(roomId) {
+      axios.get(`http://localhost:8090/op/room/updatel?roomId=${roomId}`).then(res =>{
+        this.$message.success("办理入住成功");
       });
     },
     //todo
